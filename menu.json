@@ -1,0 +1,22 @@
+[
+  {"id":1,"name":"Paneer Butter Masala","description":"Creamy paneer gravy","price":250,"image":"paneer_butter_masala.jpg"},
+  {"id":2,"name":"Chicken Biryani","description":"Fragrant basmati biryani with tender chicken","price":320,"image":"chicken_biryani.jpg"},
+  {"id":3,"name":"Veg Thali","description":"Seasonal veg with rotis and rice","price":199,"image":"veg_thali.jpg"},
+  {"id":4,"name":"Dal Makhani","description":"Black lentils cooked in butter and cream","price":220,"image":"dal_makhani.jpg"},
+  {"id":5,"name":"Chole Bhature","description":"Spicy chickpeas with fluffy fried bread","price":180,"image":"chole_bhature.jpg"},
+  {"id":6,"name":"Butter Chicken","description":"Chicken cooked in creamy tomato gravy","price":350,"image":"butter_chicken.jpg"},
+  {"id":7,"name":"Aloo Gobi","description":"Potato and cauliflower stir fry","price":180,"image":"aloo_gobi.jpg"},
+  {"id":8,"name":"Masala Dosa","description":"Crispy dosa with spiced potato filling","price":150,"image":"masala_dosa.jpg"},
+  {"id":9,"name":"Rogan Josh","description":"Tender lamb cooked in spicy gravy","price":400,"image":"rogan_josh.jpg"},
+  {"id":10,"name":"Pav Bhaji","description":"Spiced vegetable mash with buttered pav","price":160,"image":"pav_bhaji.jpg"},
+  {"id":11,"name":"Samosa","description":"Fried pastry filled with spiced potatoes","price":50,"image":"samosa.jpg"},
+  {"id":12,"name":"Matar Paneer","description":"Paneer with green peas in tomato gravy","price":230,"image":"matar_paneer.jpg"},
+  {"id":13,"name":"Fish Curry","description":"Spicy fish curry with coconut flavor","price":350,"image":"fish_curry.jpg"},
+  {"id":14,"name":"Idli Sambar","description":"Steamed rice cakes with lentil soup","price":120,"image":"idli_sambar.jpg"},
+  {"id":15,"name":"Rajma Chawal","description":"Kidney beans curry with steamed rice","price":200,"image":"rajma_chawal.jpg"},
+  {"id":16,"name":"Chicken Tikka","description":"Marinated grilled chicken chunks","price":300,"image":"chicken_tikka.jpg"},
+  {"id":17,"name":"Gulab Jamun","description":"Sweet milk dumplings in syrup","price":80,"image":"gulab_jamun.jpg"},
+  {"id":18,"name":"Paneer Tikka","description":"Grilled marinated paneer cubes","price":250,"image":"paneer_tikka.jpg"},
+  {"id":19,"name":"Veg Biryani","description":"Aromatic basmati rice with mixed vegetables","price":280,"image":"veg_biryani.jpg"},
+  {"id":20,"name":"Lassi","description":"Sweet yogurt drink","price":90,"image":"lassi.jpg"}
+]

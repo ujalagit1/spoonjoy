@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>SpoonJoy - Home</title>
+<style>
+body { margin:0; font-family: Arial,sans-serif; background: url('{{ url_for("static", filename="images/background.png") }}') no-repeat center center fixed; background-size: cover; color:#fff; }
+header { display:flex; justify-content: space-between; align-items:center; background: rgba(0,0,0,0.7); padding:10px 20px; }
+header img.logo { height:50px; }
+nav a { color:#fff; margin-left:15px; text-decoration:none; font-weight:bold; }
+nav span { margin-right:15px; }
+.container { text-align:center; margin-top:100px; }
+.container h1 { font-size:48px; margin-bottom: 20px; }
+.description {
+    max-width: 600px;
+    margin: 0 auto 30px auto;
+    font-size: 1.2em;
+    line-height: 1.6;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 20px;
+    border-radius: 10px;
+}
+.container a { display:inline-block; margin-top:20px; padding:12px 25px; background:#ff5722; color:#fff; text-decoration:none; border-radius:8px; font-weight:bold; }
+.container a:hover { background:#e64a19; }
+</style>
+</head>
+<body>
+<header>
+    <img src="{{ url_for('static', filename='images/logo.png') }}" class="logo" alt="Logo">
+    <nav>
+        <a href="{{ url_for('home') }}">Home</a>
+
+        {% if role == 'admin' %}
+            <a href="{{ url_for('admin_dashboard') }}">Orders Dashboard</a>
+            <a href="{{ url_for('admin_menu') }}">Menu Management</a>
+        {% elif role == 'delivery' %}
+            <a href="{{ url_for('delivery_dashboard') }}">Delivery Dashboard</a>
+        {% else %}
+            <a href="{{ url_for('menu') }}">Menu</a>
+            <a href="{{ url_for('cart') }}">Cart</a>
+        {% endif %}
+
+        {% if username %}
+            <a href="{{ url_for('profile') }}">Profile</a>
+            <span>Welcome, {{ username }} ({{ role.capitalize() }})!</span>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        {% else %}
+            <a href="{{ url_for('login') }}">Login</a>
+            <a href="{{ url_for('register') }}">Register</a>
+        {% endif %}
+    </nav>
+</header>
+
+<div class="container">
+    <h1>Welcome to SpoonJoy</h1>
+    <div class="description">
+        Order delicious food from our menu and have it delivered right to your door. Fresh ingredients and fast service guaranteed!
+    </div>
+    
+    {% if username %}
+        {% if role == 'admin' %}
+            <a href="{{ url_for('admin_dashboard') }}">Go to Admin Dashboard</a>
+        {% elif role == 'delivery' %}
+            <a href="{{ url_for('delivery_dashboard') }}">Go to Delivery Dashboard</a>
+        {% else %}
+            <a href="{{ url_for('menu') }}">Start Ordering Now!</a>
+        {% endif %}
+    {% else %}
+        <a href="{{ url_for('login') }}">Login to Order</a>
+    {% endif %}
+</div>
+
+</body>
+</html>

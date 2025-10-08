@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment Failed | SpoonJoy</title>
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      background: url("{{ url_for('static', filename='images/background.png') }}") no-repeat center center fixed;
+      background-size: cover;
+      margin: 0;
+      padding: 0;
+      color: #333;
+      text-align: center;
+    }
+
+    .fail-container {
+      background: rgba(255, 255, 255, 0.9);
+      max-width: 450px;
+      margin: 100px auto;
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+    }
+
+    .icon {
+      font-size: 70px;
+      color: #e74c3c;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      color: #e74c3c;
+      font-size: 26px;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 17px;
+      margin-bottom: 20px;
+    }
+
+    a.btn {
+      display: inline-block;
+      background-color: #c0392b;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+      margin: 5px;
+    }
+
+    a.btn:hover {
+      background-color: #922b21;
+    }
+
+    @media (max-width: 600px) {
+      .fail-container {
+        margin: 60px 20px;
+        padding: 20px;
+      }
+      .icon {
+        font-size: 55px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="fail-container">
+    <div class="icon">❌</div>
+    <h2>Payment Failed</h2>
+    <p>Oops! Something went wrong while processing your payment.</p>
+    <p>Please try again or return to the home page.</p>
+    <a href="{{ url_for('payment_gateway') }}" class="btn">Retry Payment</a>
+    <a href="{{ url_for('home') }}" class="btn">Home</a>
+  </div>
+</body>
+</html>
+{% endblock %}

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Payment Gateway</title>
+<style>
+/* Consistent Background and Base Styles */
+body { 
+    font-family: Arial,sans-serif; 
+    margin:0; 
+    /* Ensure this path is correct: static/images/background.png */
+    background: url('{{ url_for("static", filename="images/background.png") }}') no-repeat center center fixed; 
+    background-size: cover; 
+    color:#fff; 
+}
+.logo { width:150px; display:block; margin:20px auto; }
+nav { text-align:center; padding-bottom:20px; }
+nav a { color:#fff; margin:0 10px; text-decoration:none; font-weight:bold; }
+nav span { margin:0 10px; }
+
+/* Container */
+.container { 
+    max-width:600px; 
+    margin:50px auto; 
+    padding:30px; 
+    background: rgba(0,0,0,0.7); 
+    border-radius:10px; 
+    text-align:center; 
+}
+
+/* QR Code Styling (Maximum Clarity Settings) */
+.qr-container {
+    padding: 20px 0;
+    margin: 20px auto;
+}
+.qr-container img {
+    /* Set a fixed size. Use a larger source image (e.g., 500x500px) */
+    width: 250px; 
+    height: 250px;
+    border: 5px solid #fff;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    
+    /* 🔑 CRITICAL FIXES FOR CLARITY: These properties force sharp, pixelated rendering */
+    image-rendering: crisp-edges;
+    image-rendering: -moz-crisp-edges; /* Firefox support */
+    image-rendering: pixelated; /* Modern browser support */
+    image-rendering: -webkit-optimize-contrast; /* Webkit/Chrome optimization */
+}
+
+h2 { margin-bottom:20px; }
+ul { list-style:none; padding:0; }
+li { margin:10px 0; }
+</style>
+</head>
+<body>
+<img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="logo">
+<nav>
+    <a href="{{ url_for('home') }}">Home</a>
+    <a href="{{ url_for('menu') }}">Menu</a>
+    <a href="{{ url_for('cart') }}">Cart</a>
+    {% if username %}
+        <span>Welcome, {{ username }}!</span>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    {% else %}
+        <a href="{{ url_for('login') }}">Login</a>
+        <a href="{{ url_for('register') }}">Register</a>
+    {% endif %}
+</nav>
+
+<div class="container">
+    <h2>Scan to Complete Payment</h2>
+    
+    <div class="qr-container">
+        <h3>Scan to Pay via UPI</h3>
+        <img src="{{ url_for('static', filename='images/upi_qr.jpg') }}" alt="UPI QR Code">
+        <p>Total Amount: <strong>₹{{ total }}</strong></p>
+    </div>
+
+    <p>Order will <strong>auto-confirm</strong> in: <span id="countdown">10</span> seconds.</p>
+
+    <hr style="border-color: rgba(255,255,255,0.2); margin: 20px 0;">
+    <h4>Items in Cart:</h4>
+    <ul>
+    {% for item in items %}
+    <li>{{ item.name }} x {{ item.quantity }} = ₹{{ item.subtotal }}</li>
+    {% endfor %}
+    </ul>
+    <p><strong>Grand Total:</strong> ₹{{ total }}</p>
+</div>
+
+<script>
+let timeLeft = 10;
+let countdown = document.getElementById("countdown");
+let timer = setInterval(() => {
+    timeLeft--;
+    countdown.textContent = timeLeft;
+    if (timeLeft <= 0) {
+        clearInterval(timer);
+        window.location.href = "{{ url_for('place_order_auto') }}";
+    }
+}, 1000);
+
+countdown.textContent = timeLeft; 
+</script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Orders Dashboard</title>
+    <style>
+        body { margin: 0; font-family: Arial, sans-serif; background: url('{{ url_for("static", filename="images/background.png") }}') no-repeat center center fixed; background-size: cover; color: #fff; }
+        /* Navigation Styles (Reused from previous steps) */
+        nav { display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.7); padding: 10px 50px; }
+        nav a, nav span { color: #fff; margin-left: 20px; text-decoration: none; font-weight: bold; }
+        nav img { height: 50px; }
+        
+        /* Container and Table Styles */
+        .container { max-width: 1200px; margin: 50px auto; padding: 30px; border-radius: 15px; color: #fff; background: rgba(0,0,0,0.4); backdrop-filter: blur(5px); }
+        h2 { text-align: center; margin-bottom: 30px; }
+        table { width: 100%; border-collapse: separate; border-spacing: 0 10px; margin-top: 20px; }
+        th, td { padding: 12px; text-align: center; }
+        th { background: rgba(255,255,255,0.1); border-bottom: 2px solid #ff5722; }
+        tr { background: rgba(255,255,255,0.15); border-radius: 5px; }
+        tr:hover { background: rgba(255,255,255,0.25); }
+        
+        /* Form & Button Styles */
+        form { display: flex; align-items: center; justify-content: center; gap: 5px; }
+        select { padding: 8px; border-radius: 5px; border: none; color: #333; }
+        .btn { padding: 8px 12px; background: #ff5722; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; transition: background 0.2s; }
+        .btn:hover { background: #e64a19; }
+        
+        /* Status Badges */
+        .status { padding: 5px 10px; border-radius: 15px; font-weight: bold; font-size: 0.85em; text-transform: capitalize; }
+        .status-placed { background-color: #007bff; } /* Blue */
+        .status-preparing { background-color: #ffc107; color: #333; } /* Yellow */
+        .status-ready { background-color: #28a745; } /* Green */
+        .status-out_for_delivery { background-color: #17a2b8; } /* Cyan */
+        .status-delivered { background-color: #6c757d; } /* Gray */
+    </style>
+</head>
+<body>
+    <nav>
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo">
+        <div>
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('admin_dashboard') }}">Orders Dashboard</a>
+            <a href="{{ url_for('admin_menu') }}">Menu Management</a>
+            <span>Welcome, {{ username }} (Admin)</span>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2>Admin Dashboard - Order Management</h2>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <p style="background: rgba(255, 255, 255, 0.9); padding: 10px; border-radius: 5px; color: black; margin-bottom: 15px;">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% if orders %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Customer</th>
+                    <th>Total (₹)</th>
+                    <th>Time Placed</th>
+                    <th>Current Status</th>
+                    <th>Delivery Partner</th>
+                    <th>Assign Partner</th>
+                    <th>Update Status</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for order in orders %}
+                <tr>
+                    <td>
+                        <a href="#" style="color:#ff5722; font-weight:bold;" onclick="alert('Order Items: View feature coming soon!')">#{{ order['id'] }}</a>
+                    </td>
+                    <td>{{ order['customer_username'] }}</td>
+                    <td>₹{{ '%.2f'|format(order['total']) }}</td>
+                    <td>{{ order['timestamp'] }}</td>
+                    <td>
+                        <span class="status status-{{ order['status'].replace('_', '-') }}">
+                            {{ order['status'].replace('_', ' ').title() }}
+                        </span>
+                    </td>
+                    <td>{{ order['delivery_partner'] if order['delivery_partner'] else 'Unassigned' }}</td>
+                    
+                    <td>
+                        <form method="post" action="{{ url_for('admin_assign', order_id=order['id']) }}">
+                            <select name="delivery_user" required>
+                                <option value="" selected disabled>-- Select Partner --</option>
+                                {% for d in delivery_list %}
+                                    <option value="{{ d['username'] }}">{{ d['username'] }}</option>
+                                {% endfor %}
+                            </select>
+                            <button class="btn" type="submit">Assign</button>
+                        </form>
+                    </td>
+                    
+                    <td>
+                        <form method="post" action="{{ url_for('admin_update_status', order_id=order['id']) }}">
+                            <select name="status" required>
+                                <option value="placed" {% if order['status'] == 'placed' %}selected{% endif %}>Placed</option>
+                                <option value="preparing" {% if order['status'] == 'preparing' %}selected{% endif %}>Preparing</option>
+                                <option value="ready" {% if order['status'] == 'ready' %}selected{% endif %}>Ready</option>
+                                <option value="out_for_delivery" {% if order['status'] == 'out_for_delivery' %}selected{% endif %}>Out For Delivery</option>
+                                <option value="delivered" {% if order['status'] == 'delivered' %}selected{% endif %}>Delivered</option>
+                            </select>
+                            <button class="btn" type="submit">Update</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p style="text-align: center; margin-top: 30px;">There are no new orders at this time.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,26 @@
+[
+    {
+        "username": "admin",
+        "password": "scrypt:32768:8:1$yeJxsFMXJSuuyG5K$c3c84822705ce8bc4bda2b28f0f0175b51e640a67f4e9ff3be7050e500fdd2fcb72de1031982af776f07e2c81aa5ca9d3bccae98085275998f39982739ac5f06",
+        "role": "admin",
+        "created_at": "2025-10-03T21:55:47.429015"
+    },
+    {
+        "username": "deliv1",
+        "password": "scrypt:32768:8:1$bKNKs2DEVJ9BlBjh$d79195889e2095677dfc2080272a4c3f95af4b23f68889d5c4eec7a95bb89031b1af5812e88908f47009e8d0ff6d7eda5a1006361daf7ebdec64bdfb42710fe4",
+        "role": "delivery",
+        "created_at": "2025-10-03T21:55:47.662283"
+    },
+    {
+        "username": "bharti@321",
+        "password": "scrypt:32768:8:1$hLsMbOPawY8sKcmr$bf6173f46c0fcf418716489318feb750105722848efefbd529a924110ef1811a96347050976386b2910e452cb56b89efdc14e0c9472ddb15ca76bc35af0dc812",
+        "role": "customer",
+        "created_at": "2025-10-03T23:29:14.741051"
+    },
+    {
+        "username": "bhar@321",
+        "password": "scrypt:32768:8:1$3tZJaeK4BOBPjTqd$5d049c5fde8d10e24fff886b8d67c04cb505dbe646ef423d26f329995c85004958a1ff13b41e8034ee3950535e4d2861393ef3656ff78e5d41edee3ca882dff7",
+        "role": "customer",
+        "created_at": "2025-10-03T23:44:57.641211"
+    }
+]

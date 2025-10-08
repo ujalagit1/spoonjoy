@@ -1,0 +1,28 @@
+[
+    {
+        "id": 1,
+        "customer_username": "john_doe",
+        "items": {
+            "1": 2,
+            "3": 1
+        },
+        "total": 699.0,
+        "status": "preparing",
+        "assigned_to": "deliv1",
+        "payment_status": "success",
+        "created_at": "2025-10-03T07:15:20"
+    },
+    {
+        "id": 2,
+        "customer_username": "ujala123",
+        "items": {
+            "2": 1,
+            "4": 2
+        },
+        "total": 890.0,
+        "status": "placed",
+        "assigned_to": "",
+        "payment_status": "pending",
+        "created_at": "2025-10-03T07:22:10"
+    }
+]

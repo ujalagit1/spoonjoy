@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>SpoonJoy - Checkout</title>
+<style>
+body { font-family: Arial,sans-serif; margin:0; background: url('{{ url_for("static", filename="images/background.png") }}') no-repeat center center fixed; background-size: cover; color:#fff; }
+.logo { width:150px; display:block; margin:20px auto; }
+nav { text-align:center; padding-bottom:20px; }
+nav a { color:#fff; margin:0 10px; text-decoration:none; font-weight:bold; }
+.container { max-width:800px; margin:50px auto; padding:30px; background: rgba(0,0,0,0.6); border-radius:15px; }
+table { width:100%; border-collapse: collapse; margin-bottom:20px; }
+table th, table td { padding:12px; border-bottom:1px solid #fff; text-align:center; }
+table th { background: rgba(255,255,255,0.2); }
+.summary { text-align:right; font-size:18px; margin-bottom:20px; }
+.btn { padding:12px 25px; background:#ff5722; color:#fff; border:none; border-radius:8px; font-size:16px; cursor:pointer; display:block; margin:0 auto; }
+.btn:hover { background:#e64a19; }
+</style>
+</head>
+<body>
+<img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="logo">
+<nav>
+    <a href="{{ url_for('home') }}">Home</a>
+    <a href="{{ url_for('menu') }}">Menu</a>
+    <a href="{{ url_for('cart') }}">Cart</a>
+    {% if username %}
+        <span>Welcome, {{ username }}!</span>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    {% else %}
+        <a href="{{ url_for('login') }}">Login</a>
+        <a href="{{ url_for('register') }}">Register</a>
+    {% endif %}
+</nav>
+
+<div class="container">
+    <h2>Checkout</h2>
+    <p><strong>Name:</strong> {{ session.get('customer_name') }}</p>
+    <p><strong>Address:</strong> {{ session.get('customer_address') }}</p>
+    <p><strong>Phone:</strong> {{ session.get('customer_phone') }}</p>
+
+    {% if items %}
+    <table>
+        <tr>
+            <th>Dish</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Subtotal</th>
+        </tr>
+        {% for item in items %}
+        <tr>
+            <td>{{ item.name }}</td>
+            <td>₹{{ item.price }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>₹{{ item.subtotal }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <p class="summary">Grand Total: ₹{{ total }}</p>
+
+    <form method="GET" action="{{ url_for('payment_gateway') }}">
+        <button type="submit" class="btn">Proceed to Payment</button>
+    </form>
+    {% else %}
+    <p>Your cart is empty!</p>
+    {% endif %}
+</div>
+</body>
+</html>

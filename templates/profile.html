@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Profile & Orders</title>
+    <style>
+        body { margin: 0; font-family: Arial, sans-serif; background: url('{{ url_for("static", filename="images/background.png") }}') no-repeat center center fixed; background-size: cover; color: #fff; }
+        nav { display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.7); padding: 10px 50px; }
+        nav a, nav span { color: #fff; margin-left: 20px; text-decoration: none; font-weight: bold; }
+        nav img { height: 50px; }
+        .container { max-width: 900px; margin: 50px auto; padding: 30px; border-radius: 15px; color: #fff; background: rgba(0,0,0,0.6); }
+        h2 { border-bottom: 2px solid #ff5722; padding-bottom: 10px; margin-bottom: 30px; }
+        h3 { margin-top: 30px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { padding: 10px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.3); }
+        th { background: rgba(255,255,255,0.2); }
+    </style>
+</head>
+<body>
+    <nav>
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo">
+        <div>
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('menu') }}">Menu</a>
+            <a href="{{ url_for('cart') }}">Cart</a>
+            <span>Welcome, {{ username }} (Customer)</span>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2>My Account & Orders</h2>
+        
+        <h3>Profile Details</h3>
+        <p><b>Username:</b> {{ user.username }}</p>
+        <p><b>Email:</b> {{ user.email }}</p>
+        <p><b>Role:</b> {{ user.role.capitalize() }}</p>
+        
+        <h3>Order History</h3>
+        {% if orders %}
+        <table>
+            <tr>
+                <th>Order Ref ID</th>
+                <th>Date</th>
+                <th>Total (₹)</th>
+                <th>Status</th>
+                <th>Delivery Partner</th>
+            </tr>
+            {% for order in orders %}
+            <tr>
+                <td>#{{ order.id }}</td>
+                <td>{{ order.timestamp }}</td>
+                <td>₹{{ '%.2f'|format(order.total_price) }}</td>
+                <td><strong>{{ order.status }}</strong></td>
+                <td>{{ order.delivery_partner or 'Not Assigned Yet' }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+        <p>You have not placed any orders yet.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

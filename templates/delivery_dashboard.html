@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Delivery Dashboard</title>
+    <style>
+        body { margin: 0; font-family: Arial, sans-serif; background: url('{{ url_for("static", filename="images/background.png") }}') no-repeat center center fixed; background-size: cover; color: #fff; }
+        nav { display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.7); padding: 10px 50px; }
+        nav a, nav span { color: #fff; margin-left: 20px; text-decoration: none; font-weight: bold; }
+        nav img { height: 50px; }
+        .container { max-width: 1000px; margin: 50px auto; padding: 30px; border-radius: 15px; color: #fff; background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); }
+        h2 { text-align: center; margin-bottom: 30px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.3); }
+        th { background: rgba(255,255,255,0.2); }
+        select { padding: 8px; border-radius: 5px; border: none; margin-right: 10px; color: #333; }
+        .btn { padding: 8px 15px; background: #ff5722; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .btn:hover { background: #e64a19; }
+    </style>
+</head>
+<body>
+    <nav>
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo">
+        <div>
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('delivery_dashboard') }}">Delivery Dashboard</a>
+            <span>Welcome, {{ username }} (Delivery)</span>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2>Delivery Dashboard - Assigned Orders</h2>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <p class="flash-{{ category }}" style="background: rgba(255, 255, 255, 0.9); padding: 10px; border-radius: 5px; color: black;">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% if orders %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Customer</th>
+                    <th>Total (₹)</th>
+                    <th>Current Status</th>
+                    <th>Last Update</th>
+                    <th>Update Status</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for order in orders %}
+                <tr>
+                    <td>#{{ order['id'] }}</td>
+                    <td>{{ order['customer_username'] }}</td>
+                    <td>₹{{ '%.2f'|format(order['total_price']) }}</td>
+                    <td><strong>{{ order['status'].replace('_', ' ').title() }}</strong></td>
+                    <td>{{ order['timestamp'] }}</td>
+                    <td>
+                        <form method="post" action="{{ url_for('delivery_update_status', order_id=order['id']) }}">
+                            <select name="status" required>
+                                <option value="">-- Change Status --</option>
+                                <option value="ready" {% if order['status'] == 'ready' %}selected{% endif %}>Ready for Pickup</option>
+                                <option value="out_for_delivery" {% if order['status'] == 'out_for_delivery' %}selected{% endif %}>Out for Delivery</option>
+                                <option value="delivered" {% if order['status'] == 'delivered' %}selected{% endif %}>Delivered</option>
+                            </select>
+                            <button class="btn" type="submit">Update</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p style="text-align: center; margin-top: 30px;">You currently have no orders assigned.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Payment Successful</title>
+<style>
+body { 
+  font-family: Arial, sans-serif; 
+  margin:0; 
+  background: url('{{ url_for("static", filename="images/background.png") }}') no-repeat center center fixed; 
+  background-size: cover; 
+  color:#fff; 
+}
+.logo { width:150px; display:block; margin:20px auto; }
+.container { 
+  max-width:800px; 
+  margin:50px auto; 
+  padding:30px; 
+  background: rgba(0,0,0,0.6); 
+  border-radius:15px; 
+}
+h2 { text-align:center; }
+table { width:100%; border-collapse: collapse; margin-bottom:20px; }
+table th, table td { padding:12px; border-bottom:1px solid #fff; text-align:center; }
+table th { background: rgba(255,255,255,0.2); }
+.btn { 
+  padding:12px 25px; 
+  background:#ff5722; 
+  color:#fff; 
+  border:none; 
+  border-radius:8px; 
+  font-size:16px; 
+  cursor:pointer; 
+}
+.btn:hover { background:#e64a19; }
+</style>
+</head>
+<body>
+<img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="logo">
+<div class="container">
+<h2>Payment Successful!</h2>
+<p><strong>Name:</strong> {{ customer_name }}</p>
+<p><strong>Address:</strong> {{ customer_address }}</p>
+<p><strong>Phone:</strong> {{ customer_phone }}</p>
+
+<h3>Order Details:</h3>
+<table>
+<tr>
+    <th>Dish</th>
+    <th>Quantity</th>
+    <th>Total</th>
+    <th>Order Time</th>
+</tr>
+{% for order in orders %}
+<tr>
+    <td>{{ order['dish_name'] }}</td>
+    <td>{{ order['quantity'] }}</td>
+    <td>₹{{ order['total'] }}</td>
+    <td>{{ order['timestamp'] }}</td>
+</tr>
+{% endfor %}
+</table>
+
+<p style="text-align:center;">
+  <a href="{{ url_for('home') }}" class="btn">Back to Home</a>
+</p>
+</div>
+</body>
+</html>

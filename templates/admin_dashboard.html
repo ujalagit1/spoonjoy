@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>SpoonJoy - Admin Dashboard</title>
+<style>
+body { margin:0; font-family: Arial,sans-serif; background: url("/static/images/background.png") no-repeat center center fixed; background-size: cover; }
+header { display:flex; justify-content:space-between; align-items:center; padding:10px 50px; background: rgba(255,255,255,0.5); backdrop-filter: blur(10px);}
+header img { height:50px; }
+nav a { margin:0 15px; text-decoration:none; font-weight:bold; color:#333; }
+.container { max-width:1000px; margin:100px auto; padding:30px; background: rgba(255,255,255,0.5); backdrop-filter: blur(15px); border-radius:15px;}
+.table { width:100%; border-collapse: collapse; }
+.table th, .table td { padding:10px; border-bottom:1px solid #ccc; text-align:center; }
+.btn { padding:8px 15px; background:#ff6b6b; color:white; text-decoration:none; border:none; border-radius:5px; cursor:pointer;}
+</style>
+</head>
+<body>
+<header>
+    <img src="/static/images/logo.png" alt="SpoonJoy Logo">
+    <nav>
+        <a href="{{ url_for('admin') }}">Dashboard</a>
+        <a href="{{ url_for('logout') }}">Logout ({{ session['admin'] }})</a>
+    </nav>
+</header>
+
+<div class="container">
+<h2>Admin Dashboard</h2>
+
+<h3>Orders</h3>
+<table class="table">
+<tr><th>Order ID</th><th>User</th><th>Items</th><th>Total</th><th>Status</th><th>Action</th></tr>
+{% for order in orders %}
+<tr>
+<td>{{ order.id }}</td>
+<td>{{ order.user }}</td>
+<td>
+<ul>
+{% for item in order.items %}
+<li>{{ item.name }} x {{ item.qty }}</li>
+{% endfor %}
+</ul>
+</td>
+<td>₹{{ order.total }}</td>
+<td>{{ order.status }}</td>
+<td>
+<form method="POST" action="{{ url_for('update_order', order_id=order.id) }}">
+<select name="status">
+<option value="Pending" {% if order.status=='Pending' %}selected{% endif %}>Pending</option>
+<option value="Preparing" {% if order.status=='Preparing' %}selected{% endif %}>Preparing</option>
+<option value="Completed" {% if order.status=='Completed' %}selected{% endif %}>Completed</option>
+</select>
+<button type="submit" class="btn">Update</button>
+</form>
+</td>
+</tr>
+{% endfor %}
+</table>
+</div>
+</body>
+</html>

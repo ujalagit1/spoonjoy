@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>SpoonJoy - Details</title>
+<style>
+body { font-family: Arial,sans-serif; margin:0; background: url('{{ url_for("static", filename="images/background.png") }}') no-repeat center center fixed; background-size: cover; color:#fff; }
+.logo { width:150px; display:block; margin:20px auto; }
+nav { text-align:center; padding-bottom:20px; }
+nav a { color:#fff; margin:0 10px; text-decoration:none; font-weight:bold; }
+.container { max-width:500px; margin:50px auto; padding:30px; background: rgba(0,0,0,0.5); border-radius:20px; }
+input, textarea { width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:none; color: #000; } /* Added color to make input text visible */
+button { padding:12px 20px; background:#ff5722; color:#fff; border:none; border-radius:8px; font-weight:bold; cursor:pointer; }
+button:hover { background:#e64a19; }
+</style>
+</head>
+<body>
+<img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="logo">
+<nav>
+    <a href="{{ url_for('home') }}">Home</a>
+    <a href="{{ url_for('menu') }}">Menu</a>
+    <a href="{{ url_for('cart') }}">Cart</a>
+    {% if username %}
+        <span>Welcome, {{ username }}!</span>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    {% else %}
+        <a href="{{ url_for('login') }}">Login</a>
+        <a href="{{ url_for('register') }}">Register</a>
+    {% endif %}
+</nav>
+
+<div class="container">
+    <h2>Enter Your Details</h2>
+    <form method="POST" action="{{ url_for('details') }}">
+        <input type="text" name="name" placeholder="Your Name" value="{{ customer_name }}" required>
+        <textarea name="address" placeholder="Delivery Address" required>{{ customer_address }}</textarea>
+        <input type="text" name="phone" placeholder="Phone Number" value="{{ customer_phone }}" required>
+        <button type="submit">Proceed to Checkout</button>
+    </form>
+</div>
+</body>
+</html>

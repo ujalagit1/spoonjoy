@@ -1,0 +1,37 @@
+[
+    {
+        "id": 1,
+        "name": "Paneer Butter Masala",
+        "description": "Creamy paneer gravy",
+        "price": 250,
+        "image": "/static/images/paneer_butter_masala.jpg"
+    },
+    {
+        "id": 2,
+        "name": "Chicken Biryani",
+        "description": "Fragrant basmati biryani",
+        "price": 320,
+        "image": "/static/images/chicken_biryani.jpg"
+    },
+    {
+        "id": 3,
+        "name": "Veg Thali",
+        "description": "Seasonal veg + rotis + rice",
+        "price": 199,
+        "image": "/static/images/veg_thali.jpg"
+    },
+    {
+        "id": 4,
+        "name": "Dal Makhani",
+        "description": "Rich lentil curry",
+        "price": 200,
+        "image": "/static/images/dal_makhani.jpg"
+    },
+    {
+        "id": 5,
+        "name": "Butter Naan",
+        "description": "Soft Indian bread",
+        "price": 40,
+        "image": "/static/images/butter_naan.jpg"
+    }
+]
